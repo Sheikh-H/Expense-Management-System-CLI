@@ -120,44 +120,41 @@ def delete_expense(expense_id, description):
     DATA = load_file()
     expense = []
     if expense_id != None:
-        try:
+        for i, row in enumerate(DATA):
+            if int(row["ID"]) == expense_id:
+                expense.append(row)
+                del DATA[i]
+                break
+    if description != None:
+        counter = 0
+        for i, row in enumerate(DATA):
+            if str(row["Description"]).lower() == str(description).lower():
+                counter += 1
+        if counter == 1:
             for i, row in enumerate(DATA):
-                if int(row["ID"]) == expense_id:
+                if str(row["Description"]).lower() == description.lower():
                     expense.append(row)
                     del DATA[i]
                     break
-        except Exception as e:
-            print(e)
-        finally:
-            save_data(DATA, FILE)
-            print(f"Expense '{expense[0]['Description']}' Deleted!")
-    if description != None:
-        try:
-            counter = 0
+        else:
+            print(
+                "You have more than one expense with the same description, please use ID field instead!"
+            )
+            print("Here is a list of all expenses with the same description:")
             for i, row in enumerate(DATA):
-                if str(row["Description"]).lower() == str(description).lower():
-                    counter += 1
-            if counter == 1:
-                for i, row in enumerate(DATA):
-                    if str(row["Description"]).lower() == description.lower():
-                        expense.append(row)
-                        del DATA[i]
-                        break
+                if str(row["Description"]).lower() == description.lower():
+                    print("-" * 50)
+                    print(f"ID: {row['ID']}\t\t\t\tDate: {row['Date']}")
+                    print(f"Description: {row['Description']}")
+                    print(f"Category: {row['Category']}")
+                    print(f"Amount: £{row['Amount']}")
             else:
-                print(
-                    "You have more than one expense with the same description, please use ID field instead!"
-                )
-                print("Here is a list of all expenses with the same description:")
-                for i, row in enumerate(DATA):
-                    if str(row["Description"]).lower() == description.lower():
-                        print(row)
-                else:
-                    exit()
-        except Exception as e:
-            print(e)
-        finally:
-            save_data(DATA, FILE)
-            print(f"Expense '{expense[0]['Description']}' Deleted!")
+                exit()
+    save_data(DATA, FILE)
+    if expense:
+        print(f"Expense '{expense[0]['Description']}' Deleted!")
+    else:
+        error_messages("Unable to delete this, try again")
 
 
 def main():
@@ -167,14 +164,11 @@ def main():
             print(parser.error())
         else:
             add_expense(args.description, args.amount, args.category, args.date)
-
     if args.InitialCommand == "delete":
         if not any([args.id, args.description]):
             print(parser.error())
         else:
             delete_expense(args.id, args.description)
-    if args.InitialCommand == "update":
-        pass
 
 
 if __name__ == "__main__":
