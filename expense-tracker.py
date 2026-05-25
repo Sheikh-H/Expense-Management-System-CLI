@@ -67,6 +67,7 @@ def error_messages(*messages):
         time.sleep(0.5)
     time.sleep(3)
     clear_screen()
+    exit()
 
 
 def load_file(file=FILE):
@@ -93,18 +94,77 @@ def clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
 
 
-DATA = load_file()
+def add_expense(description, amount, category, date):
+    DATA = load_file()
+    new_id = max(int(row["ID"]) for row in DATA) + 1 if DATA else 1
+
+    formatted_date = datetime.strptime(date, "%d/%m/%Y").date()
+
+    new_expense = {
+        "ID": new_id,
+        "Description": description,
+        "Amount": amount,
+        "Category": category.upper(),
+        "Date": formatted_date,
+    }
+
+    DATA.append(new_expense)
+
+    save_data(DATA, FILE)
+    error_messages(
+        f"Added '{description}' under '{category}' for the amount of £{amount:.2f} at {formatted_date}!"
+    )
 
 
-def add_expense(expense):
-    pass
+def delete_expense(expense_id, description):
+    DATA = load_file()
+    expense = []
+    if expense_id != "":
+        for i, row in enumerate(DATA):
+            if int(row["ID"]) == expense_id:
+                expense.append(row)
+                del DATA[i]
+                break
+    if description != "":
+        counter = 0
+        for i, row in enumerate(DATA):
+            if str(row["Description"]).lower() == str(description).lower():
+                counter += 1
+        if counter == 1:
+            for i, row in enumerate(DATA):
+                if str(row["Description"]).lower() == description.lower():
+                    expense.append(row)
+                    del DATA[i]
+                    break
+        else:
+            print(
+                "You have more than one expense with the same description, please use ID field instead!"
+            )
+            print("Here is a list of all expenses with the same description:")
+            for i, row in enumerate(DATA):
+                if str(row["Description"]).lower() == description.lower():
+                    print(row)
+            else:
+                exit()
+    save_data(DATA, FILE)
+    print(f"Expense '{expense[0]['Description']}' Deleted!")
 
 
 def main():
     parser, args = on_load()
-    if args.InitialCommand == "update":
+    if args.InitialCommand == "add":
         if not any([args.description, args.amount, args.category, args.date]):
             print(parser.error())
+        else:
+            add_expense(args.description, args.amount, args.category, args.date)
+
+    if args.InitialCommand == "delete":
+        if not any([args.id, args.description]):
+            print(parser.error())
+        else:
+            delete_expense(args.id, args.description)
+    if args.InitialCommand == "update":
+        pass
 
 
 if __name__ == "__main__":
