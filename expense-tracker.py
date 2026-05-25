@@ -156,6 +156,10 @@ def delete_expense(expense_id, description):
     else:
         error_messages("Unable to delete this, try again")
 
+def update_expense(expense_id, description, new_description, new_amount, new_date, new_category):
+    # if any of the parameters are empty
+        #ignore the variable and use the rest.
+        
 
 def main():
     parser, args = on_load()
