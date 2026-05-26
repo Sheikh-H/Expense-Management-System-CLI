@@ -247,7 +247,6 @@ def export_to_csv(expenses):
             writer.writeheader()
             for key, value in enumerate(expenses):
                 writer.writerow(value)
-                
     else:
         exit()
 
