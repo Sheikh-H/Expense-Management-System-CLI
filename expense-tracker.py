@@ -28,11 +28,12 @@ def on_load():
     add_parser.add_argument("--amount", required=True, type=float)
     add_parser.add_argument("--category", required=True, type=str)
     add_parser.add_argument("--date", required=True, type=str)
+
     update_parser = subparsers.add_parser(
         name="update",
-        help="Update an existing expense - 5 optional arguments [--id, --description, --new-description, --amount, --date, --category]",
+        help="Update an existing expense - 4 optional arguments [--id OR --description] followed by one or more of these: [--newdescription, --amount, --date, --category]",
     )
-    update_parser.add_argument("--id", required=True, type=int)
+    update_parser.add_argument("--id", type=int)
     update_parser.add_argument("--description", type=str)
     update_parser.add_argument("--newdescription", type=str)
     update_parser.add_argument("--amount", type=float)
@@ -41,7 +42,7 @@ def on_load():
 
     view_parser = subparsers.add_parser(
         name="view",
-        help="View expenses - 5 optional arguments [--id, --description, --category, --amount]",
+        help="View expenses - 5 optional arguments [--id, --description, --category, --amount, --date]",
     )
     view_parser.add_argument("--description", required=False, type=str)
     view_parser.add_argument("--amount", required=False, type=float)
@@ -166,22 +167,32 @@ def update_expense(
             "Please use either expense id or expense description to search, refer to manual [-h]"
         )
     if expense_id != None:
-        for row in DATA:
-            if int(row["ID"]) == int(expense_id):
+        for i, row in enumerate(DATA):
+            if int(row["ID"]) == expense_id:
                 expense.append(row)
                 if new_description != None:
+                    print(row["Description"])
                     row["Description"] = new_description
+                else:
+                    row["Description"] = row["Description"]
                 if new_amount != None:
                     row["Amount"] = new_amount
+                else:
+                    row["Amount"] = row["Amount"]
                 if new_date != None:
-                    row["Date"] = new_date
+                    formatted_date = datetime.strptime(new_date, "%d/%m/%Y").date()
+                    row["Date"] = formatted_date
+                else:
+                    row["Date"] = row["Date"]
                 if new_category != None:
                     row["Category"] = new_category
+                else:
+                    row["Category"] = row["Category"]
                 break
     if description != None:
         count = 0
         for row in DATA:
-            if row["Description"].lower() == description.lower():
+            if str(row["Description"]).lower() == description.lower():
                 count += 1
         if count > 1:
             print(
@@ -189,28 +200,34 @@ def update_expense(
             )
             print("Here is a list of all the expenses with the same description:")
             for row in DATA:
-                if row["Description"].lower() == description.lower():
+                if str(row["Description"]).lower() == description.lower().strip():
                     print("-" * 50)
                     print(f"ID: {row['ID']}\t\t\t\tDate: {row['Date']}")
                     print(f"Description: {row['Description']}")
                     print(f"Category: {row['Category']}")
                     print(f"Amount: £{row['Amount']}")
             if count == 1:
-                for row in DATA:
-                    if row["Description"].lower() == description.lower():
+                for i, row in enumerate(DATA):
+                    if (
+                        str(row["Description"]).lower().strip()
+                        == description.lower().strip()
+                    ):
                         expense.append(row)
                         if new_description != None:
-                            row["Description"] = new_description
+                            row["Description"] = new_description.strip()
                         if new_amount != None:
-                            row["Amount"] = new_amount
+                            row["Amount"] = float(new_amount, 2)
                         if new_category != None:
-                            row["Category"] = new_category
+                            row["Category"] = new_category.strip()
                         if new_date != None:
-                            row["Date"] = new_date
+                            formatted_date = datetime.strptime(new_date, "%d/%m/%Y").date()
+                            row["Date"] = formatted_date
                         break
+    save_data(DATA, FILE)
     if expense:
         error_messages(f"Expense '{expense[0]['Description']}' has been updated!")
-        save_data(DATA, FILE)
+    else:
+        error_messages("Unable to update this expense, please try again!")
 
 
 def main():
@@ -234,7 +251,14 @@ def main():
         else:
             delete_expense(args.id, args.description)
     elif args.InitialCommand == "update":
-        if not any([args.description, args.amount, args.category, args.date]):
+        if not any(
+            [
+                args.amount,
+                args.category,
+                args.date,
+                args.newdescription,
+            ]
+        ):
             print(
                 parser.error(
                     "Please enter the fields that you would like to update for this expense!"
@@ -244,7 +268,7 @@ def main():
             update_expense(
                 args.id,
                 args.description,
-                args.new_description,
+                args.newdescription,
                 args.amount,
                 args.date,
                 args.category,

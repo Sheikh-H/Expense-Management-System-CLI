@@ -1,21 +1,22 @@
 ID,Date,Description,Amount,Category
-1,02/06/2026,bus fare,15.50,transport
-2,04/06/2026,movie tickets,45.00,entertainment
-3,06/06/2026,restaurant lunch,12.75,food
-4,08/06/2026,electricity bill,60.20,utilities
-5,10/06/2026,clothing purchase,120.99,shopping
-6,12/06/2026,coffee and snacks,8.40,food
-7,14/06/2026,pharmacy items,30.00,health
-8,16/06/2026,train ticket,55.00,transport
-9,18/06/2026,textbooks,200.00,education
-10,20/06/2026,grocery shopping,25.60,food
-11,22/06/2026,concert entry,75.00,entertainment
-12,24/06/2026,internet bill,45.90,utilities
-13,26/06/2026,home accessories,89.99,shopping
-14,28/06/2026,dental appointment,150.00,health
-15,30/06/2026,takeaway dinner,18.20,food
-16,02/07/2026,fuel expenses,40.00,transport
-17,04/07/2026,course fees,500.00,education
-18,06/07/2026,electronics accessories,65.45,shopping
-19,08/07/2026,bakery purchase,14.80,food
-20,10/07/2026,water and gas bill,95.00,utilities
+1,2005-10-10,new world,10.0,Updated
+2,2026-06-09,water bill,32.15,utilities
+3,2026-06-10,internet bill,45.99,utilities
+4,2026-06-11,gas bill,54.80,utilities
+5,2026-06-12,mobile phone bill,27.50,utilities
+6,2026-06-13,groceries,89.34,food
+7,2026-06-14,fuel,48.20,transport
+8,2026-06-15,train ticket,16.75,transport
+9,2026-06-16,coffee shop,6.40,food
+10,2026-06-17,restaurant dinner,42.90,food
+11,2026-06-18,streaming subscription,12.99,entertainment
+12,2026-06-19,gym membership,29.99,health
+13,2026-06-20,pharmacy purchase,14.65,health
+14,2026-06-21,car insurance,78.40,insurance
+15,2026-06-22,parking fee,5.50,transport
+16,2026-06-23,online shopping,64.10,shopping
+17,2026-06-24,book purchase,18.25,education
+18,2026-06-25,cinema tickets,24.00,entertainment
+19,2026-06-26,takeaway food,21.60,food
+20,2026-06-27,doctor appointment,35.00,health
+21,2026-06-28,home supplies,39.75,shopping
