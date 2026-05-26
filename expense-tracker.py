@@ -39,16 +39,6 @@ def on_load():
     update_parser.add_argument("--category", type=str)
     update_parser.add_argument("--date", type=str)
 
-    view_parser = subparsers.add_parser(
-        name="view",
-        help="View expenses - 5 optional arguments [--id, --description, --category, --amount, --date]",
-    )
-    view_parser.add_argument("--description", required=False, type=str)
-    view_parser.add_argument("--amount", required=False, type=float)
-    view_parser.add_argument("--category", required=False, type=str)
-    view_parser.add_argument("--date", required=False, type=str)
-    view_parser.add_argument("--id", required=False, type=int)
-
     delete_parser = subparsers.add_parser(
         name="delete",
         help="Delete an expense - 1 of 2 optional arguments [--id, --description]",
@@ -57,6 +47,19 @@ def on_load():
 
     delete_parser_group.add_argument("--description", type=str)
     delete_parser_group.add_argument("--id", type=int)
+
+    view_parser = subparsers.add_parser(
+        name="view",
+        help="View expenses - 9 optional arguments [--id, --description, --category, --amount, --date, --day, --month, --year]",
+    )
+    view_parser.add_argument("--description", required=False, type=str)
+    view_parser.add_argument("--amount", required=False, type=float)
+    view_parser.add_argument("--category", required=False, type=str)
+    view_parser.add_argument("--date", required=False, type=str)
+    view_parser.add_argument("--id", required=False, type=int)
+    view_parser.add_argument("--month", required=False, type=str)
+    view_parser.add_argument("--year", required=False, type=str)
+    view_parser.add_argument("--day",  required=False,type=str)
 
     return parser, parser.parse_args()
 
@@ -230,8 +233,34 @@ def view_all():
         print(f"Category: {row['Category']}")
         print(f"Amount: £{row['Amount']}")
 
-def view_by(description, category, month, year, day, date):
-    pass
+
+def view_by(expense_id, description, category, month, year, day, date):
+    DATA = load_file()
+    if expense_id is not None:
+        print("Here is the expenses with that ID:")
+        time.sleep(2)
+        for row in DATA:
+            if row["ID"] == expense_id:
+                print(row)
+                break
+    if description is not None:
+        print("Here is the expenses with that description:")
+        time.sleep(2)
+        for row in DATA:
+            if row['Description'].lower() == description.lower():
+                print(row)
+    if category is not None:
+        print(f"Here are the expenses in '{category}':")
+        time.sleep(2)
+        for row in DATA:
+            if row['category'].lower() == category.lower().strip():
+                print(row)
+    if date is not None:
+        print(f"Here are the expenses made on {date}")
+        formatted_date = datetime.strptime(date, "%d/%m/%Y").date()
+        time.sleep(2)
+        if row['Date'] == formatted_date:
+            print(row)
 
 
 def main():
@@ -278,10 +307,26 @@ def main():
                 args.category,
             )
     elif args.InitialCommand == "view":
-        if not any([args.id, args.description, args.category, args.date]):
+        if not any(
+            [
+                args.id,
+                args.description,
+                args.category,
+                args.date,
+                args.day,
+                args.month,
+                args.year,
+            ]
+        ):
             view_all()
-        elif not any([]):
-            pass
+        elif args.id:
+            view_by(args.id)
+        elif args.description:
+            view_by(args.description)
+        elif args.category:
+            view_by(args.category)
+        elif args.date:
+            view_by(args.date)
 
 
 if __name__ == "__main__":
