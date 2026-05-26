@@ -63,54 +63,14 @@ This design philosophy was implemented for several deliberate technical and educ
 Although the application fulfils the baseline roadmap.sh requirements, LedgerFlow introduces a significantly expanded command architecture and multiple advanced behaviours:
 </p>
 
-<table width="100%">
-  <thead>
-    <tr style="background-color: #376e00; color: white;">
-      <th style="padding: 10px; text-align: left;">Capability</th>
-      <th style="padding: 10px; text-align: left;">Standard Requirements</th>
-      <th style="padding: 10px; text-align: left;">LedgerFlow Implementation</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Expense Persistence</b></td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;">Store expenses locally.</td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Structured CSV-backed datastore</b> with automatic file creation and persistent financial record indexing.</td>
-    </tr>
-
-    <tr>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Command Processing</b></td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;">Basic terminal argument handling.</td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Full argparse integration</b> with subcommands, validation pipelines, mutually exclusive groups, and structured help menus.</td>
-    </tr>
-
-    <tr>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Expense Querying</b></td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;">Simple record viewing.</td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Granular temporal filtering</b> supporting queries by exact date, month, day, year, category, ID, or description.</td>
-    </tr>
-
-    <tr>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Export Handling</b></td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;">Display results to console.</td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Dynamic CSV export pipeline</b> capable of saving filtered query results directly into secondary structured reports.</td>
-    </tr>
-
-    <tr>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Error Recovery</b></td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;">Basic failures terminate execution.</td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Structured terminal error sequencing</b> with staged user prompts, delayed shutdowns, and safe runtime exits.</td>
-    </tr>
-
-    <tr>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Record Mutability</b></td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;">Update expense values.</td>
-      <td style="padding: 8px; border-bottom: 1px solid #ddd;"><b>Dual-mode mutation engine</b> supporting updates via unique ID references or expense description lookups.</td>
-    </tr>
-
-  </tbody>
-</table>
+| Capability          | Standard Requirements              | LedgerFlow Implementation                                                                                              |
+| ------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Expense Persistence | Store expenses locally             | Structured CSV-backed datastore with automatic file creation and persistent financial record indexing                  |
+| Command Processing  | Basic terminal argument handling   | Full argparse integration with subcommands, validation pipelines, mutually exclusive groups, and structured help menus |
+| Expense Querying    | Simple record viewing              | Granular temporal filtering by date, month, day, year, category, ID, or description                                    |
+| Export Handling     | Display results to console         | Dynamic CSV export pipeline saving filtered results into structured reports                                            |
+| Error Recovery      | Basic failures terminate execution | Structured terminal error sequencing with staged prompts and safe shutdowns                                            |
+| Record Mutability   | Update expense values              | Dual-mode mutation engine via ID or description lookup                                                                 |
 
 ---
 
