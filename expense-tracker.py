@@ -1,3 +1,7 @@
+"""
+The view function only uses one search parameter at a time and is unable to use more than one filter. This is something I'll work on later by redesigning how the viewby function works. I would like to think that the solve for this would be to use a results list, similar to how I have within it for exporting results to a file. I could then get it to add or remove items from that list if they don't match the users filters. I.e. populate the temporary list variable with all the expenses in there as each list item. Then take many parameters from the user i.e. date and description and for each item that doesn't match those queries remove them from that list and then use the export function to save to file.
+"""
+
 import os
 import sys
 from datetime import datetime
@@ -445,12 +449,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# Add an expense
-# Delete an expense
-# View all expenses
-# View expenses for a certain month
-# Add expense categories and filter by categories for view
-# Export a filter output as csv file
-# Export expenses as csv output
