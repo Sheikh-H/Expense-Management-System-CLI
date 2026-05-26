@@ -218,6 +218,22 @@ def update_expense(
         error_messages("Unable to update this expense, please try again!")
 
 
+def view_all():
+    DATA = load_file()
+    clear_screen()
+    print("Here is a list of all your expenses: ")
+    time.sleep(2)
+    for row in DATA:
+        print("-" * 50)
+        print(f"ID: {row['ID']}\t\t\t\tDate: {row['Date']}")
+        print(f"Description: {row['Description']}")
+        print(f"Category: {row['Category']}")
+        print(f"Amount: £{row['Amount']}")
+
+def view_by(description, category, month, year, day, date):
+    pass
+
+
 def main():
     parser, args = on_load()
     if args.InitialCommand == "add":
@@ -261,6 +277,11 @@ def main():
                 args.date,
                 args.category,
             )
+    elif args.InitialCommand == "view":
+        if not any([args.id, args.description, args.category, args.date]):
+            view_all()
+        elif not any([]):
+            pass
 
 
 if __name__ == "__main__":
