@@ -278,7 +278,7 @@ def view_by(
         print(f"Here are the expenses in '{category}':")
         time.sleep(2)
         for row in DATA:
-            if row["category"].lower() == category.lower().strip():
+            if row["Category"].lower() == category.lower().strip():
                 print(row)
     if date is not None:
         print(f"Here are the expenses made on '{date}'")
@@ -312,34 +312,36 @@ def view_by(
                 print(row)
     if month is not None:
         if month.isdigit():
-            month_num = int(month)
-            month_name = datetime(2026, month_num, 1).strftime("%B")  # Used AI for this
             formatted_month = datetime.strptime(month, "%m").month
-            print(f"Here is all the expenses made in '{month_name}':")
+            month_name = datetime.strptime(month, "%m").strftime("%B")
+
+            print(f"Here are all the expenses made in '{month_name}':")
             time.sleep(2)
+
             for row in DATA:
                 if datetime.strptime(row["Date"], "%Y-%m-%d").month == formatted_month:
                     print(row)
+
         else:
             if len(month) > 3:
-                month_num = datetime(2026, month, 1).strftime("%m")
                 formatted_month = datetime.strptime(month, "%B").month
-                print(f"Here is all the expenses made in '{month}':")
+
+                print(f"Here are all the expenses made in '{month.title()}':")
+                time.sleep(2)
+
                 for row in DATA:
-                    if (
-                        datetime.strptime(row["Date"], "%Y-%m-%d").month
-                        == formatted_month
-                    ):
+                    if datetime.strptime(row["Date"], "%Y-%m-%d").month == formatted_month:
                         print(row)
-            if len(month) == 3:
-                month_num = datetime(2026, month, 1).strftime("%m")
+
+            elif len(month) == 3:
                 formatted_month = datetime.strptime(month, "%b").month
-                print(f"Here is all the expenses made in '{formatted_month}':")
+                month_name = datetime.strptime(month, "%b").strftime("%B")
+
+                print(f"Here are all the expenses made in '{month_name}':")
+                time.sleep(2)
+
                 for row in DATA:
-                    if (
-                        datetime.strptime(row["Date"], "%Y-%m-%d").month
-                        == formatted_month
-                    ):
+                    if datetime.strptime(row["Date"], "%Y-%m-%d").month == formatted_month:
                         print(row)
 
 
