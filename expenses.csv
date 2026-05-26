@@ -1,22 +1,2 @@
 ID,Date,Description,Amount,Category
-1,2005-10-10,Hello World,10.0,Updated
-2,2026-06-09,New World,32.15,utilities
-3,2026-06-10,internet bill,45.99,utilities
-4,2026-06-11,gas bill,54.80,utilities
-5,2026-06-12,mobile phone bill,27.50,utilities
-6,2026-06-13,groceries,89.34,food
-7,2026-06-14,fuel,48.20,transport
-8,2026-06-15,train ticket,16.75,transport
-9,2026-06-16,coffee shop,6.40,food
-10,2026-06-17,restaurant dinner,42.90,food
-11,2026-06-18,streaming subscription,12.99,entertainment
-12,2026-06-19,gym membership,29.99,health
-13,2026-06-20,pharmacy purchase,14.65,health
-14,2026-06-21,car insurance,78.40,insurance
-15,2026-06-22,parking fee,5.50,transport
-16,2026-06-23,online shopping,64.10,shopping
-17,2026-06-24,book purchase,18.25,education
-18,2026-06-25,cinema tickets,24.00,entertainment
-19,2026-06-26,takeaway food,21.60,food
-20,2026-06-27,doctor appointment,35.00,health
-21,2026-06-28,home supplies,39.75,shopping
+1,2005-10-10,This is a new expense,10.0,TESTING

@@ -15,6 +15,7 @@ FILE = "expenses.csv"
 
 def on_load():
     clear_screen()
+    # AI did help me make this as this was my first use of argparse. While it didn't give me the code for it, I used AI to tell me what sort of functions this module uses and how to use it correctly within my script. After spending some time on an external file and knowing how it works. I made some edits to it and then imported it on. This is a really useful feature for commmand line utilities or tools that you can build on Python
     parser = argparse.ArgumentParser(
         prog="expense-tracker.py",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -107,7 +108,10 @@ def add_expense(description, amount, category, date):
     DATA = load_file()
     new_id = max(int(row["ID"]) for row in DATA) + 1 if DATA else 1
 
-    formatted_date = datetime.strptime(date, "%d/%m/%Y").date()
+    try:
+        formatted_date = datetime.strptime(date, "%d-%m-%Y").date()
+    except:
+        error_messages("Please re-enter the date in the following format 'dd-mm-yyy'")
 
     new_expense = {
         "ID": new_id,
