@@ -1,4 +1,4 @@
-# 💷 LedgerFlow: Intelligent Command-Line Expense Management System
+# 💷 Command-Line Expense Management System
 
 <p align="center">
   <b>A structured, CSV-backed command-line finance tracker engineered for rapid expense logging, filtering, and lifecycle management.</b><br>
